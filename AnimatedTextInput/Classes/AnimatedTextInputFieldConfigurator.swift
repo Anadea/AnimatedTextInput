@@ -11,6 +11,7 @@ public struct AnimatedTextInputFieldConfigurator {
         case multiline
         case generic(textInput: TextInput)
         case customImage(image: UIImage, autocapitalizationType: UITextAutocapitalizationType, autocorrectionType: UITextAutocorrectionType, keyboardType: UIKeyboardType)
+        case customPassword(image: UIImage?, selectedImage: UIImage?, viewMode: UITextFieldViewMode)
     }
 
     static func configure(with type: AnimatedTextInputType) -> TextInput {
@@ -31,6 +32,8 @@ public struct AnimatedTextInputFieldConfigurator {
             return textInput
         case .customImage(let image, let autocapitalizationType, let autocorrectionType, let keyboardType):
             return AnimatedTextInputCustomImageConfigurator.generate(image: image, autocapitalizationType: autocapitalizationType, autocorrectionType: autocorrectionType, keyboardType: keyboardType)
+        case .customPassword(let image, let selectedImage, let viewMode):
+            return AnimatedTextInputCustomPasswordConfigurator.generate(image: image, selectedImage: selectedImage, viewMode: viewMode)
         }
     }
 }
@@ -61,24 +64,11 @@ fileprivate struct AnimatedTextInputEmailConfigurator {
 fileprivate struct AnimatedTextInputPasswordConfigurator {
 
     static func generate() -> TextInput {
-        let textField = AnimatedTextField()
-        textField.rightViewMode = .whileEditing
-        textField.isSecureTextEntry = true
-        textField.autocapitalizationType = .none
-        let disclosureButton = UIButton(type: .custom)
-        disclosureButton.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: 20, height: 20))
         let bundle = Bundle(path: Bundle(for: AnimatedTextInput.self).path(forResource: "AnimatedTextInput", ofType: "bundle")!)
         let normalImage = UIImage(named: "cm_icon_input_eye_normal", in: bundle, compatibleWith: nil)
         let selectedImage = UIImage(named: "cm_icon_input_eye_selected", in: bundle, compatibleWith: nil)
-        disclosureButton.setImage(normalImage, for: .normal)
-        disclosureButton.setImage(selectedImage, for: .selected)
-        textField.add(disclosureButton: disclosureButton) {
-            disclosureButton.isSelected = !disclosureButton.isSelected
-            textField.resignFirstResponder()
-            textField.isSecureTextEntry = !textField.isSecureTextEntry
-            textField.becomeFirstResponder()
-        }
-        return textField
+        
+        return AnimatedTextInputCustomPasswordConfigurator.generate(image: normalImage, selectedImage: selectedImage, viewMode: .whileEditing)
     }
 }
 
@@ -135,6 +125,29 @@ fileprivate struct AnimatedTextInputCustomImageConfigurator {
         rightImage.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: 20, height: 20))
         rightImage.contentMode = .scaleAspectFit
         textField.rightView = rightImage
+
+        return textField
+    }
+}
+
+fileprivate struct AnimatedTextInputCustomPasswordConfigurator {
+
+    static func generate(image normalImage: UIImage?, selectedImage: UIImage?, viewMode: UITextFieldViewMode) -> TextInput {
+        let textField = AnimatedTextField()
+        textField.rightViewMode = viewMode
+        textField.isSecureTextEntry = true
+        textField.autocapitalizationType = .none
+
+        let disclosureButton = UIButton(type: .custom)
+        disclosureButton.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: 20, height: 20))
+        disclosureButton.setImage(normalImage, for: .normal)
+        disclosureButton.setImage(selectedImage, for: .selected)
+        textField.add(disclosureButton: disclosureButton) {
+            disclosureButton.isSelected = !disclosureButton.isSelected
+            textField.resignFirstResponder()
+            textField.isSecureTextEntry = !textField.isSecureTextEntry
+            textField.becomeFirstResponder()
+        }
 
         return textField
     }
