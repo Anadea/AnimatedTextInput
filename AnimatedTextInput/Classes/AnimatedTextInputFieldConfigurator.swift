@@ -38,8 +38,13 @@ public struct AnimatedTextInputFieldConfigurator {
     }
 }
 
-fileprivate struct AnimatedTextInputTextConfigurator {
 
+fileprivate struct Configuration {
+    static let rightViewSize = CGSize(width: 51.0, height: 20.0)
+}
+
+fileprivate struct AnimatedTextInputTextConfigurator {
+    
     static func generate() -> TextInput {
         let textField = AnimatedTextField()
         textField.clearButtonMode = .whileEditing
@@ -119,9 +124,9 @@ fileprivate struct AnimatedTextInputCustomImageConfigurator {
         textField.keyboardType = keyboardType
         textField.autocorrectionType = autocorrectionType
         textField.autocapitalizationType = autocapitalizationType
-
+        textField.rightViewPadding = 0.0
         let rightImage = UIImageView(image: image)
-        rightImage.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: 20, height: 20))
+        rightImage.frame = CGRect(origin: CGPoint.zero, size: Configuration.rightViewSize)
         rightImage.contentMode = .scaleAspectFit
         textField.rightView = rightImage
 
@@ -136,9 +141,9 @@ fileprivate struct AnimatedTextInputCustomPasswordConfigurator {
         textField.rightViewMode = viewMode
         textField.isSecureTextEntry = true
         textField.autocapitalizationType = .none
-
+        textField.rightViewPadding = 0.0
         let disclosureButton = UIButton(type: .custom)
-        disclosureButton.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: 20, height: 20))
+        disclosureButton.frame = CGRect(origin: CGPoint.zero, size: Configuration.rightViewSize)
         disclosureButton.setImage(normalImage, for: .normal)
         disclosureButton.setImage(selectedImage, for: .selected)
         textField.add(disclosureButton: disclosureButton) {
