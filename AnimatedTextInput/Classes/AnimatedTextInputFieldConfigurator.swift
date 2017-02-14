@@ -10,7 +10,7 @@ public struct AnimatedTextInputFieldConfigurator {
         case selection
         case multiline
         case generic(textInput: TextInput)
-        case customImage(image: UIImage, autocapitalizationType: UITextAutocapitalizationType, autocorrectionType: UITextAutocorrectionType, keyboardType: UIKeyboardType)
+        case customImage(image: UIImage?, autocapitalizationType: UITextAutocapitalizationType, autocorrectionType: UITextAutocorrectionType, keyboardType: UIKeyboardType)
         case customPassword(image: UIImage?, selectedImage: UIImage?, viewMode: UITextFieldViewMode)
     }
 
