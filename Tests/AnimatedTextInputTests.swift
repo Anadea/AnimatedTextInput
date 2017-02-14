@@ -14,7 +14,7 @@ class AnimatedTextInputTests: KIFTestCase {
         let viewController = UIApplication.shared.keyWindow?.rootViewController as! AnimatedTextInput_Example.ViewController
         viewController.textInputs.forEach{
             $0.text = nil
-            $0.resignFirstResponder()
+            _ = $0.resignFirstResponder()
         }
     }
 
@@ -50,7 +50,7 @@ class AnimatedTextInputTests: KIFTestCase {
         // WHEN
         sut.becomeFirstResponder()
         tester().waitForAnimationsToFinish()
-        sut.resignFirstResponder()
+        _ = sut.resignFirstResponder()
 
         // THEN
         expect(sut.isActive).to(beFalse())
@@ -108,7 +108,7 @@ class AnimatedTextInputTests: KIFTestCase {
         // WHEN
         sut.becomeFirstResponder()
         tester().waitForAnimationsToFinish()
-        sut.resignFirstResponder()
+        _ = sut.resignFirstResponder()
         tester().waitForAnimationsToFinish()
 
         // THEN
@@ -126,7 +126,7 @@ class AnimatedTextInputTests: KIFTestCase {
         sut.becomeFirstResponder()
         tester().enterText(intoCurrentFirstResponder: "hello")
         tester().waitForAnimationsToFinish()
-        sut.resignFirstResponder()
+        _ = sut.resignFirstResponder()
         tester().waitForAnimationsToFinish()
 
         // THEN

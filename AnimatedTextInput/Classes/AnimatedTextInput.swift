@@ -124,7 +124,7 @@ open class AnimatedTextInput: UIControl {
 
     fileprivate func addLineViewConstraints() {
         pinLeading(toLeadingOf: lineView, constant: style.leftMargin)
-        pinTrailing(toTrailingOf: lineView, constant: style.rightMargin)
+        _ = pinTrailing(toTrailingOf: lineView, constant: style.rightMargin)
         lineView.setHeight(to: lineWidth)
         let constant = hasCounterLabel ? -counterLabel.intrinsicContentSize.height - counterLabelTopMargin : 0
         pinBottom(toBottomOf: lineView, constant: constant)
@@ -356,7 +356,7 @@ open class AnimatedTextInput: UIControl {
 
     fileprivate func addCharacterCounterConstraints() {
         lineView.pinBottom(toTopOf: counterLabel, constant: counterLabelTopMargin)
-        pinTrailing(toTrailingOf: counterLabel, constant: counterLabelRightMargin)
+        _ = pinTrailing(toTrailingOf: counterLabel, constant: counterLabelRightMargin)
     }
 
     open func removeCharacterCounterLabel() {
@@ -376,7 +376,7 @@ open class AnimatedTextInput: UIControl {
         textInputTrailingConstraint = textInput.view.pinTrailing(toLeadingOf: disclosureView, constant: 0)
         disclosureView.alignHorizontalAxis(toSameAxisOfView: textInput.view)
         disclosureView.pinBottom(toBottomOf: self, constant: 12)
-        disclosureView.pinTrailing(toTrailingOf: self, constant: 16)
+        _ = disclosureView.pinTrailing(toTrailingOf: self, constant: 16)
     }
 
     open func removeDisclosureView() {
@@ -400,7 +400,7 @@ extension AnimatedTextInput: TextInputDelegate {
     }
 
     open func textInputDidEndEditing(textInput: TextInput) {
-        resignFirstResponder()
+        _ = resignFirstResponder()
         delegate?.animatedTextInputDidEndEditing?(animatedTextInput: self)
     }
 

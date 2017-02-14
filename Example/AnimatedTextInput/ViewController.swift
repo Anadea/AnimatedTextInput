@@ -52,7 +52,7 @@ class ViewController: UIViewController {
 
     @IBAction func backgroundTap(_ sender: AnyObject) {
         for input in textInputs {
-            input.resignFirstResponder()
+            _ = input.resignFirstResponder()
         }
     }
 }
