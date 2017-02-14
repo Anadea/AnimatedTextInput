@@ -10,6 +10,7 @@ public struct AnimatedTextInputFieldConfigurator {
         case selection
         case multiline
         case generic(textInput: TextInput)
+        case customImage(image: UIImage, autocapitalizationType: UITextAutocapitalizationType, autocorrectionType: UITextAutocorrectionType, keyboardType: UIKeyboardType)
     }
 
     static func configure(with type: AnimatedTextInputType) -> TextInput {
@@ -28,6 +29,8 @@ public struct AnimatedTextInputFieldConfigurator {
             return AnimatedTextInputMultilineConfigurator.generate()
         case .generic(let textInput):
             return textInput
+        case .customImage(let image, let autocapitalizationType, let autocorrectionType, let keyboardType):
+            return AnimatedTextInputCustomImageConfigurator.generate(image: image, autocapitalizationType: autocapitalizationType, autocorrectionType: autocorrectionType, keyboardType: keyboardType)
         }
     }
 }
@@ -112,5 +115,27 @@ fileprivate struct AnimatedTextInputMultilineConfigurator {
         textView.isScrollEnabled = false
         textView.autocorrectionType = .no
         return textView
+    }
+}
+
+fileprivate struct AnimatedTextInputCustomImageConfigurator {
+
+    static func generate(image: UIImage?,
+                         autocapitalizationType: UITextAutocapitalizationType,
+                         autocorrectionType: UITextAutocorrectionType,
+                         keyboardType: UIKeyboardType) -> TextInput
+    {
+        let textField = AnimatedTextField()
+        textField.rightViewMode = .always
+        textField.keyboardType = keyboardType
+        textField.autocorrectionType = autocorrectionType
+        textField.autocapitalizationType = autocapitalizationType
+
+        let rightImage = UIImageView(image: image)
+        rightImage.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: 20, height: 20))
+        rightImage.contentMode = .scaleAspectFit
+        textField.rightView = rightImage
+
+        return textField
     }
 }
