@@ -126,16 +126,20 @@ fileprivate struct AnimatedTextInputCustomImageConfigurator {
         textField.autocapitalizationType = autocapitalizationType
         textField.rightViewPadding = 0.0
         let rightImage = UIImageView(image: image)
+        rightImage.highlightedImage = UIImage(named: "alert_icon", in: nil, compatibleWith: nil)
         rightImage.frame = CGRect(origin: CGPoint.zero, size: Configuration.rightViewSize)
         rightImage.contentMode = .scaleAspectFit
         textField.rightView = rightImage
-
+        textField.alertHandler = { alerted in
+            rightImage.isHighlighted = alerted
+        }
+        
         return textField
     }
 }
 
 fileprivate struct AnimatedTextInputCustomPasswordConfigurator {
-
+    
     static func generate(image normalImage: UIImage?, selectedImage: UIImage?, viewMode: UITextFieldViewMode) -> TextInput {
         let textField = AnimatedTextField()
         textField.rightViewMode = viewMode
@@ -146,6 +150,11 @@ fileprivate struct AnimatedTextInputCustomPasswordConfigurator {
         disclosureButton.frame = CGRect(origin: CGPoint.zero, size: Configuration.rightViewSize)
         disclosureButton.setImage(normalImage, for: .normal)
         disclosureButton.setImage(selectedImage, for: .selected)
+        disclosureButton.setImage(UIImage(named: "alert_icon", in: nil, compatibleWith: nil), for: .disabled)
+        textField.alertHandler = { alerted in
+            disclosureButton.isEnabled = !alerted
+        }
+        
         textField.add(disclosureButton: disclosureButton) {
             disclosureButton.isSelected = !disclosureButton.isSelected
             let isResponder = textField.isFirstResponder
