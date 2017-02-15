@@ -217,11 +217,13 @@ open class AnimatedTextInput: UIControl {
         isPlaceholderAsHint = true
         configurePlaceholderWith(fontSize: style.placeholderMinFontSize,
                                  foregroundColor: style.errorColor.cgColor,
-                                 text: placeholderErrorText)
+                                 text: placeholderErrorText,
+                                 alerted: true)
         lineView.fillLine(with: style.errorColor)
     }
 
-    fileprivate func configurePlaceholderWith(fontSize: CGFloat, foregroundColor: CGColor, text: String?) {
+    fileprivate func configurePlaceholderWith(fontSize: CGFloat, foregroundColor: CGColor, text: String?, alerted: Bool = false) {
+        (textInput as? TextInputError)?.showAlerted(alerted)
         placeholderLayer.fontSize = fontSize
         placeholderLayer.foregroundColor = foregroundColor
         placeholderLayer.string = text
@@ -459,4 +461,5 @@ public protocol TextInputDelegate: class {
 public protocol TextInputError {
     func configureErrorState(with message: String?)
     func removeErrorHintMessage()
+    func showAlerted(_ alerted: Bool)
 }

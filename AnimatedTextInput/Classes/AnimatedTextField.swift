@@ -1,5 +1,7 @@
 import UIKit
 
+typealias AlertHandler = (Bool) -> Void
+
 final internal class AnimatedTextField: UITextField {
 
     enum TextFieldType {
@@ -13,6 +15,8 @@ final internal class AnimatedTextField: UITextField {
     fileprivate let clearButtonPadding: CGFloat = -8
 
     var rightViewPadding: CGFloat
+    var alertHandler: AlertHandler?
+    
     weak var textInputDelegate: TextInputDelegate?
 
     fileprivate var disclosureButtonAction: ((Void) -> Void)?
@@ -103,6 +107,10 @@ extension AnimatedTextField: TextInputError {
 
     func removeErrorHintMessage() {
         placeholder = nil
+    }
+    
+    func showAlerted(_ alerted: Bool) {
+        alertHandler?(alerted)
     }
 }
 
