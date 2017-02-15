@@ -148,9 +148,11 @@ fileprivate struct AnimatedTextInputCustomPasswordConfigurator {
         disclosureButton.setImage(selectedImage, for: .selected)
         textField.add(disclosureButton: disclosureButton) {
             disclosureButton.isSelected = !disclosureButton.isSelected
-            textField.resignFirstResponder()
+            let isResponder = textField.isFirstResponder
             textField.isSecureTextEntry = !textField.isSecureTextEntry
-            textField.becomeFirstResponder()
+            if isResponder {
+                textField.becomeFirstResponder()
+            }
         }
 
         return textField
