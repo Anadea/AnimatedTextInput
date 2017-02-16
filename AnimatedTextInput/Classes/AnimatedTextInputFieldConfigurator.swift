@@ -127,9 +127,12 @@ fileprivate struct AnimatedTextInputCustomImageConfigurator {
         textField.rightViewPadding = 0.0
         let rightImage = UIImageView(image: image)
         rightImage.highlightedImage = UIImage(named: "alert_icon", in: nil, compatibleWith: nil)
-        rightImage.frame = CGRect(origin: CGPoint.zero, size: Configuration.rightViewSize)
+        let view = UIView(frame: CGRect(origin: CGPoint.zero, size: Configuration.rightViewSize))
+        view.backgroundColor = .clear
+        view.addSubview(rightImage)
+        rightImage.center = view.center
         rightImage.contentMode = .scaleAspectFit
-        textField.rightView = rightImage
+        textField.rightView = view
         textField.alertHandler = { alerted in
             rightImage.isHighlighted = alerted
         }
