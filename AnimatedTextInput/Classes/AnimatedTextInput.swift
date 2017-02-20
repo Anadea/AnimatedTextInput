@@ -10,8 +10,12 @@ import UIKit
     @objc optional func animatedTextInputShouldReturn(animatedTextInput: AnimatedTextInput) -> Bool
 }
 
-open class AnimatedTextInput: UIControl {
+public enum AnimatedInputState {
+    case inactive, active, alert, success
+}
 
+open class AnimatedTextInput: UIControl {
+    
     public typealias AnimatedTextInputType = AnimatedTextInputFieldConfigurator.AnimatedTextInputType
 
     open var tapAction: ((Void) -> Void)?
@@ -193,7 +197,8 @@ open class AnimatedTextInput: UIControl {
         isPlaceholderAsHint = true
         configurePlaceholderWith(fontSize: style.placeholderMinFontSize,
                                  foregroundColor: style.activeColor.cgColor,
-                                 text: placeHolderText)
+                                 text: placeHolderText,
+                                 state: .active)
         lineView.fillLine(with: style.activeColor)
     }
 
@@ -201,7 +206,8 @@ open class AnimatedTextInput: UIControl {
         isPlaceholderAsHint = true
         configurePlaceholderWith(fontSize: style.placeholderMinFontSize,
                                  foregroundColor: style.inactiveColor.cgColor,
-                                 text: placeHolderText)
+                                 text: placeHolderText,
+                                 state: .inactive)
         lineView.animateToInitialState()
     }
 
@@ -209,7 +215,8 @@ open class AnimatedTextInput: UIControl {
         isPlaceholderAsHint = false
         configurePlaceholderWith(fontSize: style.textInputFont.pointSize,
                                  foregroundColor: style.inactiveColor.cgColor,
-                                 text: placeHolderText)
+                                 text: placeHolderText,
+                                 state: .inactive)
         lineView.animateToInitialState()
     }
 
@@ -218,12 +225,21 @@ open class AnimatedTextInput: UIControl {
         configurePlaceholderWith(fontSize: style.placeholderMinFontSize,
                                  foregroundColor: style.errorColor.cgColor,
                                  text: placeholderErrorText,
-                                 alerted: true)
+                                 state: .alert)
         lineView.fillLine(with: style.errorColor)
     }
-
-    fileprivate func configurePlaceholderWith(fontSize: CGFloat, foregroundColor: CGColor, text: String?, alerted: Bool = false) {
-        (textInput as? TextInputError)?.showAlerted(alerted)
+    
+    fileprivate func configurePlaceholderAsSuccessHint() {
+        isPlaceholderAsHint = false
+        configurePlaceholderWith(fontSize: style.placeholderMinFontSize,
+                                 foregroundColor: style.activeColor.cgColor,
+                                 text: placeHolderText,
+                                 state: .success)
+        lineView.fillLine(with: style.successColor)
+    }
+    
+    fileprivate func configurePlaceholderWith(fontSize: CGFloat, foregroundColor: CGColor, text: String?, state: AnimatedInputState) {
+        (textInput as? TextInputError)?.inputStateChanged(state)
         placeholderLayer.fontSize = fontSize
         placeholderLayer.foregroundColor = foregroundColor
         placeholderLayer.string = text
@@ -318,7 +334,11 @@ open class AnimatedTextInput: UIControl {
         }
         animatePlaceholder(to: configurePlaceholderAsErrorHint)
     }
-
+    
+    open func showSuccess() {
+        animatePlaceholder(to: configurePlaceholderAsSuccessHint)
+    }
+    
     open func clearError() {
         placeholderErrorText = nil
         if let textInputError = textInput as? TextInputError {
@@ -461,5 +481,5 @@ public protocol TextInputDelegate: class {
 public protocol TextInputError {
     func configureErrorState(with message: String?)
     func removeErrorHintMessage()
-    func showAlerted(_ alerted: Bool)
+    func inputStateChanged(_ state: AnimatedInputState)
 }

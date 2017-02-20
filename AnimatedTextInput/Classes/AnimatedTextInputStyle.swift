@@ -5,6 +5,7 @@ public protocol AnimatedTextInputStyle {
     var inactiveColor: UIColor { get }
     var lineInactiveColor: UIColor { get }
     var errorColor: UIColor { get }
+    var successColor: UIColor { get }
     var textInputFont: UIFont { get }
     var textInputFontColor: UIColor { get }
     var placeholderMinFontSize: CGFloat { get }
@@ -23,6 +24,7 @@ public struct AnimatedTextInputStyleBlue: AnimatedTextInputStyle {
     public let inactiveColor = UIColor.gray.withAlphaComponent(0.5)
     public let lineInactiveColor = UIColor.gray.withAlphaComponent(0.2)
     public let errorColor = UIColor.red
+    public let successColor = UIColor.gray.withAlphaComponent(0.2)
     public let textInputFont = UIFont.systemFont(ofSize: 14)
     public let textInputFontColor = UIColor.black
     public let placeholderMinFontSize: CGFloat = 9

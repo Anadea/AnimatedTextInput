@@ -46,6 +46,9 @@
 		429EE8A81E548DAD00D660E9 /* alert_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 429EE8A51E548DAD00D660E9 /* alert_icon.png */; };
 		429EE8A91E548DAD00D660E9 /* alert_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 429EE8A61E548DAD00D660E9 /* alert_icon@2x.png */; };
 		429EE8AA1E548DAD00D660E9 /* alert_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 429EE8A71E548DAD00D660E9 /* alert_icon@3x.png */; };
+		42A780FA1E5ADFDC00318B6B /* success_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A780F71E5ADFDC00318B6B /* success_icon.png */; };
+		42A780FB1E5ADFDC00318B6B /* success_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A780F81E5ADFDC00318B6B /* success_icon@2x.png */; };
+		42A780FC1E5ADFDC00318B6B /* success_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A780F91E5ADFDC00318B6B /* success_icon@3x.png */; };
 		469E9C3ED9FD6009F7C9AAF9E537E212 /* Nimble.h in Headers */ = {isa = PBXBuildFile; fileRef = 0E15AC03F19D9A7CF679734E292B5715 /* Nimble.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4F15C4EE12D39DC47943CA1DDACE047E /* CALayer-KIFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AA009E89DEC32140C4A0753A677DD5BD /* CALayer-KIFAdditions.m */; };
 		4F3F103945CC52D0A3B8A891BB0E21C4 /* RaisesException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B42189D760CE68EA382E4C3CB199CFA /* RaisesException.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -266,6 +269,9 @@
 		429EE8A51E548DAD00D660E9 /* alert_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alert_icon.png; sourceTree = "<group>"; };
 		429EE8A61E548DAD00D660E9 /* alert_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert_icon@2x.png"; sourceTree = "<group>"; };
 		429EE8A71E548DAD00D660E9 /* alert_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert_icon@3x.png"; sourceTree = "<group>"; };
+		42A780F71E5ADFDC00318B6B /* success_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = success_icon.png; sourceTree = "<group>"; };
+		42A780F81E5ADFDC00318B6B /* success_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success_icon@2x.png"; sourceTree = "<group>"; };
+		42A780F91E5ADFDC00318B6B /* success_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success_icon@3x.png"; sourceTree = "<group>"; };
 		42B6DB50F996CBEDC8FF9E2F7FD5B0C3 /* BeGreaterThanOrEqualTo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeGreaterThanOrEqualTo.swift; path = Sources/Nimble/Matchers/BeGreaterThanOrEqualTo.swift; sourceTree = "<group>"; };
 		44236D188675341015E5CE60334505A6 /* Pods-AnimatedTextInput_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-AnimatedTextInput_Tests-umbrella.h"; sourceTree = "<group>"; };
 		445967731439E373CC6FB7E8581A5997 /* Errors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Errors.swift; path = Sources/Nimble/Utils/Errors.swift; sourceTree = "<group>"; };
@@ -744,6 +750,9 @@
 				429EE8A51E548DAD00D660E9 /* alert_icon.png */,
 				429EE8A61E548DAD00D660E9 /* alert_icon@2x.png */,
 				429EE8A71E548DAD00D660E9 /* alert_icon@3x.png */,
+				42A780F71E5ADFDC00318B6B /* success_icon.png */,
+				42A780F81E5ADFDC00318B6B /* success_icon@2x.png */,
+				42A780F91E5ADFDC00318B6B /* success_icon@3x.png */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -1090,6 +1099,9 @@
 				51FE6330A24B58B972B11B060DB321DF /* AnimatedTextInput.bundle in Resources */,
 				429EE8A81E548DAD00D660E9 /* alert_icon.png in Resources */,
 				429EE8AA1E548DAD00D660E9 /* alert_icon@3x.png in Resources */,
+				42A780FC1E5ADFDC00318B6B /* success_icon@3x.png in Resources */,
+				42A780FA1E5ADFDC00318B6B /* success_icon.png in Resources */,
+				42A780FB1E5ADFDC00318B6B /* success_icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@ public struct AnimatedTextInputFieldConfigurator {
         case selection
         case multiline
         case generic(textInput: TextInput)
-        case customImage(image: UIImage?, autocapitalizationType: UITextAutocapitalizationType, autocorrectionType: UITextAutocorrectionType, keyboardType: UIKeyboardType)
+        case customImage(image: UIImage?, autocapitalizationType: UITextAutocapitalizationType, autocorrectionType: UITextAutocorrectionType, keyboardType: UIKeyboardType, isSecure: Bool)
         case customPassword(image: UIImage?, selectedImage: UIImage?, viewMode: UITextFieldViewMode)
     }
 
@@ -30,8 +30,12 @@ public struct AnimatedTextInputFieldConfigurator {
             return AnimatedTextInputMultilineConfigurator.generate()
         case .generic(let textInput):
             return textInput
-        case .customImage(let image, let autocapitalizationType, let autocorrectionType, let keyboardType):
-            return AnimatedTextInputCustomImageConfigurator.generate(image: image, autocapitalizationType: autocapitalizationType, autocorrectionType: autocorrectionType, keyboardType: keyboardType)
+        case .customImage(let image, let autocapitalizationType, let autocorrectionType, let keyboardType, let isSecure):
+            return AnimatedTextInputCustomImageConfigurator.generate(image: image,
+                                                                     autocapitalizationType: autocapitalizationType,
+                                                                     autocorrectionType: autocorrectionType,
+                                                                     keyboardType: keyboardType,
+                                                                     isSecureEntry: isSecure)
         case .customPassword(let image, let selectedImage, let viewMode):
             return AnimatedTextInputCustomPasswordConfigurator.generate(image: image, selectedImage: selectedImage, viewMode: viewMode)
         }
@@ -117,7 +121,8 @@ fileprivate struct AnimatedTextInputCustomImageConfigurator {
     static func generate(image: UIImage?,
                          autocapitalizationType: UITextAutocapitalizationType,
                          autocorrectionType: UITextAutocorrectionType,
-                         keyboardType: UIKeyboardType) -> TextInput
+                         keyboardType: UIKeyboardType,
+                         isSecureEntry: Bool) -> TextInput
     {
         let textField = AnimatedTextField()
         textField.rightViewMode = .always
@@ -125,16 +130,24 @@ fileprivate struct AnimatedTextInputCustomImageConfigurator {
         textField.autocorrectionType = autocorrectionType
         textField.autocapitalizationType = autocapitalizationType
         textField.rightViewPadding = 0.0
+        textField.isSecureTextEntry = isSecureEntry
         let rightImage = UIImageView(image: image)
-        rightImage.highlightedImage = UIImage(named: "alert_icon", in: nil, compatibleWith: nil)
         let view = UIView(frame: CGRect(origin: CGPoint.zero, size: Configuration.rightViewSize))
         view.backgroundColor = .clear
         view.addSubview(rightImage)
         rightImage.center = view.center
         rightImage.contentMode = .scaleAspectFit
         textField.rightView = view
-        textField.alertHandler = { alerted in
-            rightImage.isHighlighted = alerted
+        textField.stateHandler = { state in
+            let alerted = state == .alert
+            let highlightImage = UIImage(named: (alerted ? "alert_icon" : "success_icon"), in: nil, compatibleWith: nil)
+            let image = alerted || state == .success ? highlightImage : image
+            rightImage.image = image
+            if let image = image {
+                let center = rightImage.center
+                rightImage.frame = CGRect(origin: CGPoint.zero, size: image.size)
+                rightImage.center = center
+            }
         }
         
         return textField
@@ -153,9 +166,11 @@ fileprivate struct AnimatedTextInputCustomPasswordConfigurator {
         disclosureButton.frame = CGRect(origin: CGPoint.zero, size: Configuration.rightViewSize)
         disclosureButton.setImage(normalImage, for: .normal)
         disclosureButton.setImage(selectedImage, for: .selected)
-        disclosureButton.setImage(UIImage(named: "alert_icon", in: nil, compatibleWith: nil), for: .disabled)
-        textField.alertHandler = { alerted in
-            disclosureButton.isEnabled = !alerted
+        textField.stateHandler = { state in
+            let alerted = state == .alert
+            let imageName = alerted ? "alert_icon" : "success_icon"
+            disclosureButton.setImage(UIImage(named: imageName, in: nil, compatibleWith: nil), for: .disabled)
+            disclosureButton.isEnabled = !(alerted || state == .success)
         }
         
         textField.add(disclosureButton: disclosureButton) {

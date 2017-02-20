@@ -1,6 +1,6 @@
 import UIKit
 
-typealias AlertHandler = (Bool) -> Void
+typealias StateHandler = (AnimatedInputState) -> Void
 
 final internal class AnimatedTextField: UITextField {
 
@@ -15,7 +15,7 @@ final internal class AnimatedTextField: UITextField {
     fileprivate let clearButtonPadding: CGFloat = -8
 
     var rightViewPadding: CGFloat
-    var alertHandler: AlertHandler?
+    var stateHandler: StateHandler?
     
     weak var textInputDelegate: TextInputDelegate?
 
@@ -109,8 +109,8 @@ extension AnimatedTextField: TextInputError {
         placeholder = nil
     }
     
-    func showAlerted(_ alerted: Bool) {
-        alertHandler?(alerted)
+    func inputStateChanged(_ state: AnimatedInputState) {
+        stateHandler?(state)
     }
 }
 
